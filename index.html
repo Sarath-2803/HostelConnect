@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HostelConnect</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background-color: #f8f9fa;
+    }
+
+    /* Header */
+    header {
+      background: white;
+      color: #007bff;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height:50px
+    }
+
+    header h1 {
+      margin-left: 20px;
+    }
+
+    nav {
+      margin-right: 20px;
+      display: flex;
+    }
+
+    nav a:hover{
+      color:#0004ff;
+    }
+
+    nav a {
+      color: #007bff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+
+    /* Hero Section */
+    .hero {
+      background: url('images/hostel-bg.jpg') no-repeat center center/cover;
+      color: rgb(255, 255, 255);
+      padding: 30px 0 0 0;
+      height:150%;
+      background-color: #007bff;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 36px;
+      color:yellow;
+      font-weight: bolder;
+}
+
+    .hero .search-bar {
+      margin-top: 20px;
+    }
+
+    #horizontalBanner{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        width:100%;
+        margin:0;
+        background-color: wheat;
+    }
+
+    #horizontalBanner img{
+        margin: 0;
+        width:25%;
+    }
+
+    #viewHostel{
+        margin:0px 0 20px 0;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: rgb(240, 14, 14);
+        color:white;
+        padding: 10px 15px;
+        border-radius:5px;
+       cursor: pointer;
+    }
+
+    #viewHostel:hover{
+        background-color: rgb(255, 60, 0);
+    }
+
+    .search-bar input {
+      padding: 10px;
+      width: 250px;
+    }
+
+    .search-bar button {
+      padding: 10px;
+      background: #ffcc00;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Features Section */
+    .features {
+      display: flex;
+      justify-content: center;
+      margin: 40px 0 40px 0;
+    }
+
+    .feature-box {
+      background: white;
+      padding: 20px;
+      margin: 10px;
+      width: 250px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-box img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .feature-box h3 {
+      color: #007bff;
+    }
+
+    /* CTA Section */
+    .cta {
+      background: #007bff;
+      color: white;
+      padding: 10px 20px 40px 20px;
+      margin-top: 30px;
+    }
+
+    .cta-btn {
+      background: #ffcc00;
+      padding: 10px 20px;
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* Footer */
+    footer {
+      background: #343a40;
+      color: white;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div style="display: flex;">
+      <img src="./components/Logo2.png" style="width:80px">
+    <h1>HostelConnect</h1>
+    </div>
+    
+    <nav>
+      <a href="#" style="font-weight: bold;">Home</a>
+      <a href="./about.html">About</a>
+      <a href="./signin.html" id="navSignIn">Sign in</a>
+      <a href="./signup.html" style="color:black" id='navSignUp'>Sign up</a>
+      <a href="" style="color:black;font-weight:bold" id='navSignOut'>Sign Out</a>
+    </nav>
+  </header>
+
+  <!--Hero Section-->
+  <section class="hero">
+    <!--<img src="./components/hostel_banner.jpg" style="width:50%"> -->
+    <h2>Find Your Perfect Hostel!</h2>
+    <p style="margin: -20px 0 20px 0;font-size: 17px;">Discover comfortable and affordable stays with HostelConnect.</p>
+    <button id="viewHostel" >View Hostels</button>
+    <div id="horizontalBanner">
+        <img src="./components/Boys1.png">
+        <img src="./components/girls5.png">
+        <img src="./components/Boys3.png">
+        <img src="./components/Girls3.png">
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <h2 style="margin: 40px 0 -30px 0;">Features</h2>
+  <section class="features">
+    <div class="feature-box">
+      <img src="./components/secure.png" alt="Secure" />
+      <h3>Safe & Secure</h3>
+      <p>24/7 security for a safe stay.</p>
+    </div>
+    <div class="feature-box">
+      <img src="./components/wifi.png" alt="WiFi" />
+      <h3>Free WiFi</h3>
+      <p>Stay connected with high-speed internet.</p>
+    </div>
+    <div class="feature-box">
+      <img src="./components/affordable.png" alt="Affordable" />
+      <h3>Affordable Prices</h3>
+      <p>Find budget-friendly accommodations easily.</p>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta" id="cta">
+    <h2>Looking for a Hostel?</h2>
+    <p>Sign up now and book your ideal stay.</p>
+    <a href="./signup.html" class="cta-btn">Get Started</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>2025 HostelConnect. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
