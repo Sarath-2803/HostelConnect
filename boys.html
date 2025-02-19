@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel Details for Boys</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #87CEEB;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #ffffff;
+            margin-bottom: 30px;
+            height:60px;
+        }
+        .header img {
+            height: 70px;
+            margin-right: 10px;
+        }
+        .container {
+            width:80%;
+            margin: 20px auto 30px auto;
+            padding: 10px 30px 30px 30px;
+            background: #1E90FF;
+            color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            color: #ffffff;
+        }
+        .hostel-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        .hostel {
+            background: #4682B4;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            justify-content: center;
+            align-items: center;
+        }
+        .hostel img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .home-link {
+            margin-top:5px;
+            position: relative;
+            display:flex;
+            gap:25px;
+        }
+        .home-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight:200px;
+            
+        }
+        .home-text:hover{
+            background-color: #00000038;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="./components/Logo2.png" alt="Organization Logo">
+        <h2 style="color: #007bff;;font-size: 30px;width:80%;text-align: left;">Boys' Hostels</h2>
+        <div class="home-link">
+            <a href="index.html"><h2 class="home-text">Home</h2></a>
+            <a href="about.html"><h2 class="home-text">About</h2></a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Hostel Details</h1>
+        <div class="hostel-grid">
+            <div class="hostel">
+                <img src="./components/Boys1.png" alt="Happy Homes">
+                <p><strong>Name:</strong> Happy Homes </p>
+                <p><strong>Address:</strong> Avenue 1, Engineering College Lane, Sreekariyam</p>
+                <p><strong>Rooms:</strong> Single, Two Sharing, Three sharing</p>
+                <p><strong>Rates:</strong> 4000, 2000, 1500 per month</p>
+                <p><strong>Food Included:</strong> Yes</p>
+                <p><strong>Contact:</strong> +91 9494949494</p>
+            </div>
+            <div class="hostel">
+                <img src="./components/Boys2.png" alt="Vivek PG">
+                <p><strong>Name:</strong> Vivek PG</p>
+                <p><strong>Address:</strong> Building No. 23/14, CET Lane, Sreekariyam</p>
+                <p><strong>Rooms:</strong> Single, Double</p>
+                <p><strong>Rates:</strong> 3500, 1500 per month</p>
+                <p><strong>Food Included:</strong> No</p>
+                <p><strong>Contact:</strong> +91 9191919191</p>
+            </div>
+            <div class="hostel">
+                <img src="./components/Boys3.png" alt="Govt Mens Hostel">
+                <p><strong>Name:</strong> Govt Mens Hostel </p>
+                <p><strong>Address:</strong> Behind Engineering College, Sreekariyam</p>
+                <p><strong>Rooms:</strong> Two Sharing, Three sharing, Dormitory</p>
+                <p><strong>Rates:</strong> 1500, 1000, 500 per month</p>
+                <p><strong>Food Included:</strong> Yes</p>
+                <p><strong>Contact:</strong> 0471 223344</p>
+             </div>
+            <div class="hostel">
+                <img src="./components/Boys4.png" alt="Sreeragam Homestay">
+                <p><strong>Name:</strong> Sreeragam Homestay</p>
+                <p><strong>Address:</strong> House no. 8/14, CET Lane, Sreekariyam</p>
+                <p><strong>Rooms:</strong> Single, Double</p>
+                <p><strong>Rates:</strong> 3000, 1500 per month</p>
+                <p><strong>Food Included:</strong> Yes</p>
+                <p><strong>Contact:</strong> +91 8585858585</p>
+            </div>
+            <div class="hostel">
+                <img src="./components/Boys5.png" alt="Peace Accomodation for Boys">
+                <p><strong>Name:</strong> Peace accomodation for Mens</p>
+                <p><strong>Address:</strong> Avenue 10, Engineering College Lane, Sreekariyam, Trivandrum</p>
+                <p><strong>Rooms:</strong> Two Sharing, Dormitory</p>
+                <p><strong>Rates:</strong> 2000, 1000 per month</p>
+                <p><strong>Food Included:</strong> No</p>
+                <p><strong>Contact:</strong> +91 8383838383</p>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
