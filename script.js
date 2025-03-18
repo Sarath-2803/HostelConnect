@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+/*import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 
@@ -17,6 +17,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+*/
 
 document.addEventListener('DOMContentLoaded', () => {
     //signup
@@ -47,71 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentUser = JSON.parse(localStorage.getItem('currentUser')) || [];
     console.log('Current user:', currentUser);
 
-    const signUp = async (event) => {
-        event.preventDefault();
-
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, signupEmail.value, signupPasswd.value);
-            const user = userCredential.user;
-            await setDoc(doc(db, "users", user.uid), {
-                name: name.value,
-                age: age.value,
-                phone: phone.value,
-                gender: gender.value,
-                email: signupEmail.value
-            });
-            signedin = 1;
-            localStorage.setItem('signedin', JSON.stringify(signedin));
-            currentUser = { name: name.value, email: signupEmail.value, gender: gender.value };
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-            window.location.href = 'index.html';
-        } catch (e) {
-            console.error("Error signing up: ", e);
-            alert(e.message);
-        }
-    }
-
-    const signIn = async (event) => {
-        event.preventDefault();
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, signinEmail.value, signinPasswd.value);
-            const user = userCredential.user;
-            const userDoc = await getDoc(doc(db, "users", user.uid));
-            if (userDoc.exists()) {
-                const userData = userDoc.data();
-                currentUser = { name: userData.name, email: userData.email, gender: userData.gender };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                signedin = 1;
-                localStorage.setItem('signedin', JSON.stringify(signedin));
-
-                window.location.href = 'index.html';
-            } else {
-                alert('User not found!');
-            }
-        } catch (error) {
-            alert(error.message);
-        }
-    }
-
-    const signOutUser = async (event) => {
-        event.preventDefault();
-
-        try {
-            await signOut(auth);
-            currentUser = [];
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            signedin = 0;
-            localStorage.setItem('signedin', JSON.stringify(signedin));
-            window.location.href = 'index.html';
-        } catch (error) {
-            console.error("Error signing out: ", error);
-            alert(error.message);
-        }
-    };
 
     const buttonFun = (event) => {
         event.preventDefault();
+        console.log('Signed in:', signedin);
+        console.log('Current user:', currentUser);
+        localStorage.getItem('signedin');
 
         if (signedin == 1) {
             if (currentUser.gender == 'male') {
@@ -122,14 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             window.location.href = 'signin.html';
         }
-    }
-
-    if (signupForm) {
-        signupForm.addEventListener('submit', signUp);
-    }
-
-    if (signinForm) {
-        signinForm.addEventListener('submit', signIn);
     }
 
     if (viewHostel) {
@@ -147,6 +81,4 @@ document.addEventListener('DOMContentLoaded', () => {
         navSignOut.style.display = 'none';
         cta.style.display = 'block';
     }
-
-    navSignOut.addEventListener('click', signOutUser);
 });
