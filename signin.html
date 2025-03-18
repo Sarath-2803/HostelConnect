@@ -21,7 +21,61 @@
         <a href='./signup.html' class="pop-style sign-up-text" ><h3>Create Account</h3></a>
     </div>
     <script src="script.js" type="module"></script>
-   
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+        apiKey: "AIzaSyCb3ho0zl99d8BD9I_LjVNSA4JB3vVm554",
+        authDomain: "hostelconnect-45eda.firebaseapp.com",
+        projectId: "hostelconnect-45eda",
+        storageBucket: "hostelconnect-45eda.appspot.com",
+        messagingSenderId: "1039951459263",
+        appId: "1:1039951459263:web:1d7fc84c0a46b35817a70a"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        const signinEmail = document.getElementById('signin-email');
+        const signinPasswd = document.getElementById('signin-password');
+        const signinForm = document.getElementById('signin-form');
+        const signinButton = document.getElementById('signin-button');
+
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) 
+        let signedin = JSON.parse(localStorage.getItem('signedin'))
+
+
+        const signIn = async (event) => {
+            event.preventDefault();
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, signinEmail.value, signinPasswd.value);
+                const user = userCredential.user;
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    currentUser = { name: userData.name, email: userData.email, gender: userData.gender };
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    signedin = 1;
+                    localStorage.setItem('signedin', JSON.stringify(signedin));
+
+                    window.location.href = 'index.html';
+                } else {
+                    alert('User not found!');
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+        if (signinForm) {
+            signinForm.addEventListener('submit', signIn);
+        }
+
+</script>
 </body>
 
 </html>
