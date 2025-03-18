@@ -38,5 +38,66 @@
         <a href='./signin.html' class="pop-style sign-up-text"><h3>SIGN IN</h3></a>
     </div>
     <script src='script.js' type='module'></script> 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+        apiKey: "AIzaSyCb3ho0zl99d8BD9I_LjVNSA4JB3vVm554",
+        authDomain: "hostelconnect-45eda.firebaseapp.com",
+        projectId: "hostelconnect-45eda",
+        storageBucket: "hostelconnect-45eda.appspot.com",
+        messagingSenderId: "1039951459263",
+        appId: "1:1039951459263:web:1d7fc84c0a46b35817a70a"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        const name = document.getElementById('name');
+        const age = document.getElementById('age');
+        const phone = document.getElementById('phone');
+        const gender = document.getElementById('gender');
+        const signupEmail = document.getElementById('signup-email');
+        const signupPasswd = document.getElementById('signup-password');
+        const signupForm = document.getElementById('signup-form');
+
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) 
+        let signedin = JSON.parse(localStorage.getItem('signedin'))
+
+        const signUp = async (event) => {
+            event.preventDefault();
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, signupEmail.value, signupPasswd.value);
+                const user = userCredential.user;
+                await setDoc(doc(db, "users", user.uid), {
+                    name: name.value,
+                    age: age.value,
+                    phone: phone.value,
+                    gender: gender.value,
+                    email: signupEmail.value
+                });
+                signedin = 1;
+                localStorage.setItem('signedin', JSON.stringify(signedin));
+                currentUser = { name: name.value, email: signupEmail.value, gender: gender.value };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                window.location.href = 'index.html';
+            } catch (e) {
+                console.error("Error signing up: ", e);
+                alert(e.message);
+            }
+        
+        }
+        if (signupForm) {
+            signupForm.addEventListener('submit', signUp);
+        }
+
+    </script>
 </body>
 </html>
