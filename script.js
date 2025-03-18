@@ -1,3 +1,23 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCb3ho0zl99d8BD9I_LjVNSA4JB3vVm554",
+  authDomain: "hostelconnect-45eda.firebaseapp.com",
+  projectId: "hostelconnect-45eda",
+  storageBucket: "hostelconnect-45eda.appspot.com",
+  messagingSenderId: "1039951459263",
+  appId: "1:1039951459263:web:1d7fc84c0a46b35817a70a"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
 document.addEventListener('DOMContentLoaded', () => {
     //signup
     const name = document.getElementById('name');
@@ -19,68 +39,79 @@ document.addEventListener('DOMContentLoaded', () => {
     const navSignIn = document.getElementById('navSignIn');
     const navSignUp = document.getElementById('navSignUp');
     const navSignOut = document.getElementById('navSignOut');
-    const cta= document.getElementById('cta');
+    const cta = document.getElementById('cta');
 
-    let users = JSON.parse(localStorage.getItem('users')) || [];
     let signedin = JSON.parse(localStorage.getItem('signedin')) || 0;
     console.log('Signed in:', signedin);
 
     let currentUser = JSON.parse(localStorage.getItem('currentUser')) || [];
     console.log('Current user:', currentUser);
 
-
-    const signUp = (event) => {
+    const signUp = async (event) => {
         event.preventDefault();
 
-        users.push({ email: signupEmail.value, password: signupPasswd.value, name: name.value, age: age.value, phone: phone.value, gender: gender.value });
-        localStorage.setItem('users', JSON.stringify(users));
-
-        signedin = 1;
-        localStorage.setItem('signedin', JSON.stringify(signedin));
-        currentUser = { name: users[users.length - 1].name, gender: users[users.length - 1].gender };
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-        
-        window.location.href = 'index.html';
-    }
-
-    const signIn = (event) => {
-        event.preventDefault();
-
-        const user = users.find((user) => {
-            return user.email === signinEmail.value && user.password === signinPasswd.value;
-        });
-
-        const emailError = users.some((user) => {
-            return user.email === signinEmail.value;
-        });
-
-        const passwdError = users.some((user) => {
-            return user.password === signinPasswd.value;
-        });
-
-        if (user) {
-            currentUser = { name: user.name, gender: user.gender };
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, signupEmail.value, signupPasswd.value);
+            const user = userCredential.user;
+            await setDoc(doc(db, "users", user.uid), {
+                name: name.value,
+                age: age.value,
+                phone: phone.value,
+                gender: gender.value,
+                email: signupEmail.value
+            });
             signedin = 1;
             localStorage.setItem('signedin', JSON.stringify(signedin));
+            currentUser = { name: name.value, email: signupEmail.value, gender: gender.value };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-            
             window.location.href = 'index.html';
-        } else {
-            if (emailError == 0 && passwdError == 0) {
-                alert('USER NOT FOUND! Create a new account');
-            }
-            if (emailError == 1 && passwdError == 0) {
-                alert('Wrong Password! Try Again...');
-            }
+        } catch (e) {
+            console.error("Error signing up: ", e);
+            alert(e.message);
         }
     }
 
+    const signIn = async (event) => {
+        event.preventDefault();
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, signinEmail.value, signinPasswd.value);
+            const user = userCredential.user;
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                currentUser = { name: userData.name, email: userData.email, gender: userData.gender };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                signedin = 1;
+                localStorage.setItem('signedin', JSON.stringify(signedin));
+
+                window.location.href = 'index.html';
+            } else {
+                alert('User not found!');
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
+    const signOutUser = async (event) => {
+        event.preventDefault();
+
+        try {
+            await signOut(auth);
+            currentUser = [];
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            signedin = 0;
+            localStorage.setItem('signedin', JSON.stringify(signedin));
+            window.location.href = 'index.html';
+        } catch (error) {
+            console.error("Error signing out: ", error);
+            alert(error.message);
+        }
+    };
+
     const buttonFun = (event) => {
         event.preventDefault();
-        console.log('Signed in:', signedin);
-        console.log('Current user:', currentUser);
 
         if (signedin == 1) {
             if (currentUser.gender == 'male') {
@@ -93,18 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const signOut =(event) =>{
-        event.preventDefault();
-
-        currentUser =[];
-        localStorage.setItem('currentUser',JSON.stringify(currentUser));
-        console.log(currentUser)
-        signedin=0;
-        console.log(signedin)
-        localStorage.setItem('signedin',JSON.stringify(signedin));
-        window.location.href='index.html';
-    }
-
     if (signupForm) {
         signupForm.addEventListener('submit', signUp);
     }
@@ -113,24 +132,21 @@ document.addEventListener('DOMContentLoaded', () => {
         signinForm.addEventListener('submit', signIn);
     }
 
-    
-
     if (viewHostel) {
         viewHostel.addEventListener('click', buttonFun);
     }
 
-    if(signedin==1){
-        navSignIn.style.display='none';
-        navSignUp.style.display='none';
-        navSignOut.style.display='block';
-        cta.style.display='none';
-    }
-    else{
-        navSignIn.style.display='block';
-        navSignUp.style.display='block';
-        navSignOut.style.display='none';
-        cta.style.display='block';
+    if (signedin == 1) {
+        navSignIn.style.display = 'none';
+        navSignUp.style.display = 'none';
+        navSignOut.style.display = 'block';
+        cta.style.display = 'none';
+    } else {
+        navSignIn.style.display = 'block';
+        navSignUp.style.display = 'block';
+        navSignOut.style.display = 'none';
+        cta.style.display = 'block';
     }
 
-    navSignOut.addEventListener('click',signOut);
+    navSignOut.addEventListener('click', signOutUser);
 });
