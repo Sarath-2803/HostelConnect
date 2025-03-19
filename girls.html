@@ -68,6 +68,9 @@
         .home-text:hover{
             background-color: #00000038;
         }
+        .blur {
+            filter: blur(5px);
+        }
     </style>
 </head>
 <body>
@@ -136,8 +139,11 @@
             const signedin = JSON.parse(localStorage.getItem('signedin')) || 0;
 
             if (!currentUser || signedin !== 1 || currentUser.gender !== 'female') {
-                alert('Unauthorized access!');
-                window.location.href = 'index.html';
+                document.body.classList.add('blur');
+                setTimeout(() => {
+                    alert('Unauthorized access!');
+                    window.location.href = 'index.html';
+                }, 0); // Short delay to ensure blur effect is applied
             }
         });
     </script>
