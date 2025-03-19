@@ -131,5 +131,16 @@
         </div>
         
     </div>
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+            const signedin = JSON.parse(localStorage.getItem('signedin')) || 0;
+
+            if (!currentUser || signedin !== 1 || currentUser.gender !== 'male') {
+                alert('Unauthorized access!');
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
 </body>
 </html>
